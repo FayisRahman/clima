@@ -5,11 +5,10 @@ class Location {
   double? longitude;
 
   Future<void> getCurrentLocation() async {
+    await Geolocator.checkPermission();
+    await Geolocator.requestPermission();
     try {
-      Position position = await Geolocator.getCurrentPosition(locationSettings: LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 10,
-      ));
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       latitude = position.latitude;
       longitude = position.longitude;
     } catch (e) {
